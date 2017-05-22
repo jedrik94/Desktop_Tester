@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.112"
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+        <BorderPane prefWidth="1360.0" prefHeight="768.0">
+
+            <bottom>
+                <TextField fx:id="actionTarget" BorderPane.alignment="CENTER"/>
+            </bottom>
+            <center>
+                <Button onAction="#handleActionOnFileChoosingButton" text="Heh" BorderPane.alignment="CENTER"/>
+            </center>
+        </BorderPane>
+    <columnConstraints>
+        <ColumnConstraints/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints/>
+    </rowConstraints>
+</GridPane>
