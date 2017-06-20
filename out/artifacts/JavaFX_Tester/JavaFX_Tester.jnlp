@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="JavaFX_Tester.jnlp">
+  <information>
+    <title>Tester_Desktop</title>
+    <vendor>J?drzej Wojtkowiak</vendor>
+    <description>JavaFX_Tester</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="JavaFX_Tester.jar" size="61751" download="eager" />
+  </resources>
+  <jfx:javafx-desc  width="1380" height="770" main-class="sample.Main"  name="JavaFX_Tester" />
+  <update check="background"/>
+</jnlp>

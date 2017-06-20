@@ -13,8 +13,7 @@ class FileChooseConfigurer {
                 new File(System.getProperty("user.home"))
         );
         this.fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("TXT", "*.txt"),
-                new FileChooser.ExtensionFilter("BIN", "*.bin")
+                new FileChooser.ExtensionFilter("BINARY", "*")
         );
         return this.fileChooser;
     };

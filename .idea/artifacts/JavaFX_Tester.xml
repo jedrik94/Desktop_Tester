@@ -1,0 +1,22 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="JavaFX_Tester">
+    <output-path>$PROJECT_DIR$/out/artifacts/JavaFX_Tester</output-path>
+    <properties id="javafx-properties">
+      <options>
+        <option name="appClass" value="sample.Main" />
+        <option name="description" value="" />
+        <option name="height" value="770" />
+        <option name="htmlPlaceholderId" value="" />
+        <option name="title" value="Tester_Desktop" />
+        <option name="vendor" value="Jędrzej Wojtkowiak" />
+        <option name="version" value="" />
+        <option name="width" value="1380" />
+      </options>
+    </properties>
+    <root id="root">
+      <element id="archive" name="JavaFX_Tester.jar">
+        <element id="module-output" name="JavaFX_Tester" />
+      </element>
+    </root>
+  </artifact>
+</component>
