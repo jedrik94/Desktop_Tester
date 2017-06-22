@@ -114,8 +114,8 @@
                      <RowConstraints maxHeight="5.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
                   </rowConstraints>
                   <children>
-                     <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font: BOLD 20 Tahoma;" text="Diehard tests #1" />
-                     <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font: BOLD 20 Tahoma;" text="Diehard tests #2" GridPane.columnIndex="1" />
+                     <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font: BOLD 20 Tahoma;" text="die-hard tests #1" />
+                     <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font: BOLD 20 Tahoma;" text="die-hard tests #2" GridPane.columnIndex="1" />
                      <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font: NORMAL 15 Tahoma" text="Birthday spacing" GridPane.rowIndex="1" />
                      <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font: NORMAL 15 Tahoma" text="Overlapping permutations" GridPane.rowIndex="2" />
                      <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font: NORMAL 15 Tahoma" text="Ranks of matrices" GridPane.rowIndex="3" />
@@ -178,6 +178,23 @@
                   <children>
                      <Button fx:id="startAnalyze" alignment="CENTER" mnemonicParsing="false" onAction="#handleActionOnStartAnalyzeButton" style="-fx-alignment: center;" text="Start Analyze" />
                      <TextField fx:id="elapsedTimeAfterAnalyzeStartTextField" disable="true" promptText="Elapsed time in seconds" />
+                  </children>
+               </HBox>
+               <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                  <children>
+                     <VBox fx:id="downloadsPart" alignment="CENTER" prefHeight="200.0" prefWidth="500.0" spacing="10.0">
+                        <children>
+                           <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font: NORMAL 20 Tahoma" text="Download tests results" textAlignment="CENTER" />
+                           <HBox alignment="CENTER" spacing="10.0">
+                              <children>
+                                 <Button fx:id="downloadNistData" alignment="CENTER" mnemonicParsing="false" onAction="#handleActionOnStartAnalyzeButton" prefWidth="100.0" style="-fx-alignment: center;" text="NIST" />
+                                 <Button fx:id="downloadDiehardData" alignment="CENTER" mnemonicParsing="false" onAction="#handleActionOnStartAnalyzeButton" prefWidth="100.0" style="-fx-alignment: center;" text="die-hard" />
+                                 <Button fx:id="downloadU01Data" alignment="CENTER" mnemonicParsing="false" onAction="#handleActionOnStartAnalyzeButton" prefWidth="100.0" style="-fx-alignment: center;" text="TestU01" />
+                              </children>
+                           </HBox>
+                           <Button fx:id="downloadAllData" alignment="CENTER" mnemonicParsing="false" onAction="#handleActionOnStartAnalyzeButton" prefWidth="100.0" style="-fx-alignment: center;" text="All above" />
+                        </children>
+                     </VBox>
                   </children>
                </HBox>
                  </children>
