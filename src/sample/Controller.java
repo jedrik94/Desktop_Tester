@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -7,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 import javafx.util.Duration;
@@ -14,12 +16,13 @@ import org.controlsfx.control.Notifications;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Controller {
 
-    private String pathToFileToBeAnalyzed = "";
+    private String pathToFileToBeAnalyzedTestU01 = "";
+    private String pathToFileToBeAnalyzedNistDieHard = "";
+
     private boolean isAnalyzing = false;
 
     @FXML
@@ -32,67 +35,73 @@ public class Controller {
     private CheckBox testU01 = new CheckBox();
 
     @FXML
-    private TextField actionTarget = new TextField();
+    private TextField pathTestU01 = new TextField();
 
     @FXML
-    private FileChooser fileChooser = new FileChooseConfigurer().configureFileChooser();
+    private TextField pathTestNistDieHard = new TextField();
+
+    @FXML
+    private FileChooser fileChooserTestU01 = new FileChooseConfigurer().configureFileChooser();
+
+    @FXML
+    private Button fileChooserButtonTestU01 = new Button();
+
+    @FXML
+    private Button fileChooserButtonNistDieHard = new Button();
+
+    @FXML
+    private FileChooser fileChooserNistDieHard = new FileChooseConfigurer().configureFileChooser();
 
     @FXML
     private Button startAnalyze = new Button();
+
+    @FXML
+    private TextField sequenceLengthNist = new TextField();
 
     @FXML
     private TextField elapsedTimeAfterAnalyzeStartTextField = new TextField();
 
     @FXML
     protected void handleActionOnStartAnalyzeButton(ActionEvent event) {
-        if (!pathToFileToBeAnalyzed.isEmpty()) {
+        String path = System.getProperty("user.dir");
+        NanoTimer timer = new NanoTimer();
 
-            String path = System.getProperty("user.dir");
-            NanoTimer timer = new NanoTimer();
-            Checker processesChecker = null;
 
-            {
-                isAnalyzing = true;
-                startAnalyze.setDisable(true);
-                testNist.setDisable(true);
-                testDieHard.setDisable(true);
-                testU01.setDisable(true);
-            }
+        List<String> filesPathsList = new ArrayList<>();
+        filesPathsList.addAll(Arrays.asList(pathToFileToBeAnalyzedNistDieHard, pathToFileToBeAnalyzedTestU01));
 
-            int exitValue = 0;
-            Map<String, Process> processesList = new HashMap<>(3);
+        List<CheckBox> selectorsList = new ArrayList<>();
+        selectorsList.addAll(Arrays.asList(testU01, testNist, testDieHard));
+
+        List<Node> disableElementsList = new ArrayList<>();
+        disableElementsList.addAll(Arrays.asList(startAnalyze, testDieHard, testNist, testU01, fileChooserButtonNistDieHard, fileChooserButtonTestU01));
+
+        Disabler elementsDisabler = new Disabler(disableElementsList);
+
+        if (selectorsList.stream().anyMatch(CheckBox::isSelected) && filesPathsList.stream().anyMatch(s -> !s.isEmpty())) {
+
+            isAnalyzing = true;
+            elementsDisabler.setDisable(true);
+
+            List<Process> processesList = new ArrayList<>(3);
 
             try {
-                if (testNist.isSelected()) {
+                if (testNist.isSelected() && !pathToFileToBeAnalyzedNistDieHard.isEmpty()) {
 
-                    processesList.put("Nist", new ProcessBuilder(path + "\\assess.exe", "1000", pathToFileToBeAnalyzed)
-//                    processesList.put("Nist", new ProcessBuilder("D:\\sts-2.1.2\\sts-2.1.2\\assess.exe", "1000", pathToFileToBeAnalyzed)
+
+                    processesList.add(new ProcessBuilder(path + "\\assess.exe", sequenceLengthNist.getText().isEmpty() ? "10000" : sequenceLengthNist.getText().replaceAll("[^0-9]", ""), pathToFileToBeAnalyzedNistDieHard)
                             .redirectOutput(ProcessBuilder.Redirect.INHERIT)
                             .redirectError(ProcessBuilder.Redirect.INHERIT).start());
-                    /*Process processNist = processesList.get("Nist");
-
-                    exitValue = processNist.waitFor();
-                    System.out.println("\nExit value of process: " + exitValue);*/
                 }
 
-                if (testDieHard.isSelected()) {
-                    processesList.put("DieHard", new ProcessBuilder(path + "\\diehard.exe", pathToFileToBeAnalyzed)
-//                    processesList.put("DieHard", new ProcessBuilder("D:\\diehard-master\\diehard.exe", pathToFileToBeAnalyzed)
+                if (testDieHard.isSelected() && !pathToFileToBeAnalyzedNistDieHard.isEmpty()) {
+                    processesList.add(new ProcessBuilder(path + "\\diehard.exe", pathToFileToBeAnalyzedNistDieHard)
                             .redirectOutput(new File(path + "\\results_diehard.log"))
                             .redirectError(ProcessBuilder.Redirect.INHERIT).start());
-                    /*Process processDieHard = processesList.get("DieHard");
-
-                    exitValue = processDieHard.waitFor();
-                    System.out.println("\nExit value of process: " + exitValue);*/
                 }
 
-                if (testU01.isSelected()) {
-                    String pathTemp = "/" + Character.toLowerCase(path.charAt(0)) + path.substring(1).replace(":", "").replace("\\", "/") + "/";
-                    String pathToFileToBeAnalyzedTemp = "/" + Character.toLowerCase(pathToFileToBeAnalyzed.charAt(0)) + pathToFileToBeAnalyzed.substring(1).replace(":", "").replace("\\", "/");
-
-                    System.out.println(pathToFileToBeAnalyzedTemp);
-                    System.out.println(pathTemp);
-                    processesList.put("U01", new ProcessBuilder("D:\\Programs\\Git\\bin\\bash.exe", "-c", pathTemp + "testU01bat.exe " + pathToFileToBeAnalyzedTemp)
+                if (testU01.isSelected() && !pathToFileToBeAnalyzedTestU01.isEmpty()) {
+                    processesList.add(new ProcessBuilder("D:\\Programs\\Git\\bin\\bash.exe", "-c", LinuxPathConverter.getPath(path, true) + "testU01bat.exe " + LinuxPathConverter.getPath(pathToFileToBeAnalyzedTestU01, false))
                             .redirectOutput(new File(path + "\\results_testU01.log"))
                             .redirectError(new File(path + "\\error_testU01.log")).start());
                 }
@@ -102,25 +111,28 @@ public class Controller {
                 e.printStackTrace();
             } finally {
 
-                processesChecker = new Checker(processesList);
+                Checker processesChecker = new Checker(processesList);
                 processesChecker.start();
 
-                while (isAnalyzing) {
-                    if (processesChecker.isAlive()) {
+                new Thread(new Task<Void>() {
+                    @Override
+                    public Void call() {
+                        while (isAnalyzing) {
+                            if (processesChecker.isAlive()) {
 
-                        System.out.println(processesList.get("U01").isAlive() + "");
-                    } else {
-                        elapsedTimeAfterAnalyzeStartTextField.setText(timer.getElapsedTimeSec() + "sec");
+                            } else {
+                                elapsedTimeAfterAnalyzeStartTextField.setText(timer.getElapsedTimeSec() + "sec");
 
-                        isAnalyzing = false;
-                        startAnalyze.setDisable(false);
-                        testNist.setDisable(false);
-                        testU01.setDisable(false);
-                        testDieHard.setDisable(false);
+                                isAnalyzing = false;
+                                elementsDisabler.setDisable(false);
+                            }
+                        }
+                        return null;
                     }
-                }
+                }).start();
             }
         }
+
     }
 
     @FXML
@@ -129,12 +141,19 @@ public class Controller {
         Window stage = source.getScene().getWindow();
 
         if (!isAnalyzing) {
-            File file = fileChooser.showOpenDialog(stage);
-            if (file != null) {
-                pathToFileToBeAnalyzed = file.getAbsolutePath();
+            if (event.getSource() == fileChooserButtonNistDieHard) {
+                File file = fileChooserNistDieHard.showOpenDialog(stage);
+                if (file != null) {
+                    pathToFileToBeAnalyzedNistDieHard = file.getAbsolutePath();
+                }
+                pathTestNistDieHard.setText(pathToFileToBeAnalyzedNistDieHard);
+            } else if (event.getSource() == fileChooserButtonTestU01) {
+                File file = fileChooserTestU01.showOpenDialog(stage);
+                if (file != null) {
+                    pathToFileToBeAnalyzedTestU01 = file.getAbsolutePath();
+                }
+                pathTestU01.setText(pathToFileToBeAnalyzedTestU01);
             }
-
-            actionTarget.setText(pathToFileToBeAnalyzed);
         } else {
             Notifications notificationBuilder = Notifications.create()
                     .title("Info")
@@ -146,5 +165,11 @@ public class Controller {
         }
     }
 
-
+    @FXML
+    protected void handleMouseOverSequenceField(ActionEvent event) {
+        if (event.getSource() == sequenceLengthNist) {
+            Node textField = (Node) event.getSource();
+            Tooltip.install(textField, new Tooltip("Gets ONLY numbers!"));
+        }
+    }
 }

@@ -25,10 +25,16 @@
                                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font: NORMAL 20 Tahoma" text="Combo-Tester" />
                                  <HBox alignment="CENTER" prefWidth="1300.0" spacing="10">
                                      <children>
-                                         <Button onAction="#handleActionOnFileChoosingButton" text="Choose file to analyze" />
-                                         <TextField fx:id="actionTarget" disable="true" prefWidth="250" promptText="Path" />
+                                         <Button fx:id="fileChooserButtonTestU01" onAction="#handleActionOnFileChoosingButton" prefWidth="100.0" text="Choose file" />
+                                         <TextField fx:id="pathTestU01" disable="true" prefWidth="400.0" promptText="Text file with [0,1) values (TestU01)" />
                                      </children>
                                  </HBox>
+                           <HBox alignment="CENTER" prefWidth="1300.0" spacing="10">
+                              <children>
+                                 <Button fx:id="fileChooserButtonNistDieHard" onAction="#handleActionOnFileChoosingButton" prefWidth="100.0" text="Choose file" />
+                                 <TextField fx:id="pathTestNistDieHard" disable="true" prefWidth="400.0" promptText="Unformatted binary file (NIST, die-hard)" />
+                              </children>
+                           </HBox>
                         </children>
                      </VBox>
                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="500.0" spacing="10.0">
@@ -45,6 +51,7 @@
                                          <Insets />
                                      </opaqueInsets>
                                  </HBox>
+                           <TextField fx:id="sequenceLengthNist" maxWidth="200.0" onAction="#handleMouseOverSequenceField" prefWidth="200.0" promptText="Sequence Length (bits)" />
                         </children>
                      </VBox>
                   </children>
