@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="JavaFX_Tester.jar" size="70651" download="eager" />
+    <jar href="JavaFX_Tester.jar" size="70980" download="eager" />
     <jar href="libs\controlsfx-8.40.12.jar" size="996389" download="eager" />
     <jar href="libs\zip4j_1.3.2.jar" size="131025" download="eager" />
   </resources>

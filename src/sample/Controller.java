@@ -28,6 +28,7 @@ public class Controller {
 
     private String pathToFileToBeAnalyzedTestU01 = "";
     private String pathToFileToBeAnalyzedNistDieHard = "";
+    private String pathToBashExe = "";
 
     private boolean isAnalyzing = false;
 
@@ -64,6 +65,12 @@ public class Controller {
     private FileChooser destinyChooserZipFileSave = new FileChooseConfigurer().configureFileChooser("Destiny of zip file", "ZIP", "*.zip");
 
     @FXML
+    private FileChooser bashChooserPath = new FileChooseConfigurer().configureFileChooser("Executable bash.exe", "EXE", "*.exe");
+
+    @FXML
+    private Button bashChooserButton = new Button();
+
+    @FXML
     private Button startAnalyze = new Button();
 
     @FXML
@@ -77,6 +84,9 @@ public class Controller {
 
     @FXML
     private Button zipDieHardFiles = new Button();
+
+    @FXML
+    private TextField pathBash = new TextField();
 
     @FXML
     private TextField sequenceLengthNist = new TextField();
@@ -98,7 +108,7 @@ public class Controller {
         selectorsList.addAll(Arrays.asList(testU01, testNist, testDieHard));
 
         List<Node> disableElementsList = new ArrayList<>();
-        disableElementsList.addAll(Arrays.asList(startAnalyze, testDieHard, testNist, testU01, sequenceLengthNist));
+        disableElementsList.addAll(Arrays.asList(startAnalyze, testDieHard, testNist, testU01, sequenceLengthNist, bashChooserButton));
 
         List<Node> disableZipButtonsList = new ArrayList<>();
         disableZipButtonsList.addAll(Arrays.asList(zipAllFiles, zipDieHardFiles, zipNistFiles, zipTestU01Files));
@@ -139,7 +149,7 @@ public class Controller {
                 }
 
                 if (testU01.isSelected() && !pathToFileToBeAnalyzedTestU01.isEmpty()) {
-                    processesList.add(new ProcessBuilder("D:\\Programs\\Git\\bin\\bash.exe", "-c", LinuxPathConverter.getPath(path, true) + "testU01bat.exe " + LinuxPathConverter.getPath(pathToFileToBeAnalyzedTestU01, false))
+                    processesList.add(new ProcessBuilder(pathToBashExe, "-c", LinuxPathConverter.getPath(path, true) + "testU01bat.exe " + LinuxPathConverter.getPath(pathToFileToBeAnalyzedTestU01, false))
                             .redirectOutput(new File(path + "\\results_testU01.log"))
                             .redirectError(new File(path + "\\error_testU01.log")).start());
                 }
@@ -210,6 +220,20 @@ public class Controller {
     }
 
     @FXML
+    protected void handleActionOnBashPathChooser(ActionEvent event) {
+        Node source = (Node) event.getSource();
+        Window stage = source.getScene().getWindow();
+
+        if (!isAnalyzing) {
+                File file = bashChooserPath.showOpenDialog(stage);
+                if (file != null) {
+                    pathToBashExe = file.getAbsolutePath();
+                }
+                pathBash.setText(pathToBashExe);
+        }
+    }
+
+    @FXML
     protected void handleMouseOverSequenceField(ActionEvent event) {
         if (event.getSource() == sequenceLengthNist) {
             Node textField = (Node) event.getSource();
@@ -265,7 +289,8 @@ public class Controller {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
+            }
+            if (zipFile != null) {
                 try {
                     Files.delete(zipFile.getFile().toPath());
                 } catch (IOException e) {
