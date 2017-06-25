@@ -6,7 +6,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import org.controlsfx.control.Notifications;
 
 public class Main extends Application {
 
@@ -16,9 +15,9 @@ public class Main extends Application {
 
         primaryStage.getIcons().add(new Image("/sample/icon.png"));
         primaryStage.setTitle("Tester");
-        primaryStage.setMaxHeight(770);
+        primaryStage.setMaxHeight(1000);
         primaryStage.setMaxWidth(1380);
-        primaryStage.setScene(new Scene(root, 1360, 768));
+        primaryStage.setScene(new Scene(root, 1380, 1000));
         primaryStage.getScene().getStylesheets().addAll(this.getClass().getResource("styles.css").toExternalForm());
 
         primaryStage.show();

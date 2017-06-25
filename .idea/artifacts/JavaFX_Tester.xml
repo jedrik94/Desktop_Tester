@@ -16,6 +16,10 @@
     <root id="root">
       <element id="archive" name="JavaFX_Tester.jar">
         <element id="module-output" name="JavaFX_Tester" />
+        <element id="directory" name="libs">
+          <element id="library" level="project" name="zip4j_1.3.2" />
+          <element id="library" level="project" name="controlsfx-8.40.12" />
+        </element>
       </element>
     </root>
   </artifact>

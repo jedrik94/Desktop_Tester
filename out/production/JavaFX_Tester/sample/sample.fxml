@@ -15,7 +15,7 @@
 
 <ScrollPane fitToWidth="true" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
      <content>
-         <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="7680.0" styleClass="pane" stylesheets="@styles.css">
+         <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" styleClass="pane" stylesheets="@styles.css">
              <VBox prefHeight="200.0" prefWidth="1300.0" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                  <children>
                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
@@ -189,17 +189,17 @@
                </HBox>
                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                   <children>
-                     <VBox fx:id="downloadsPart" alignment="CENTER" prefHeight="200.0" prefWidth="500.0" spacing="10.0">
+                     <VBox fx:id="downloadsPart" alignment="CENTER" prefHeight="200.0" prefWidth="500.0" spacing="10.0" visible="false">
                         <children>
                            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font: NORMAL 20 Tahoma" text="Download tests results" textAlignment="CENTER" />
                            <HBox alignment="CENTER" spacing="10.0">
                               <children>
-                                 <Button fx:id="downloadNistData" alignment="CENTER" mnemonicParsing="false" onAction="#handleActionOnStartAnalyzeButton" prefWidth="100.0" style="-fx-alignment: center;" text="NIST" />
-                                 <Button fx:id="downloadDiehardData" alignment="CENTER" mnemonicParsing="false" onAction="#handleActionOnStartAnalyzeButton" prefWidth="100.0" style="-fx-alignment: center;" text="die-hard" />
-                                 <Button fx:id="downloadU01Data" alignment="CENTER" mnemonicParsing="false" onAction="#handleActionOnStartAnalyzeButton" prefWidth="100.0" style="-fx-alignment: center;" text="TestU01" />
+                                 <Button fx:id="zipNistFiles" alignment="CENTER" mnemonicParsing="false" onAction="#handleActionOnZipButtons" prefWidth="100.0" style="-fx-alignment: center;" text="NIST" />
+                                 <Button fx:id="zipDieHardFiles" alignment="CENTER" mnemonicParsing="false" onAction="#handleActionOnZipButtons" prefWidth="100.0" style="-fx-alignment: center;" text="die-hard" />
+                                 <Button fx:id="zipTestU01Files" alignment="CENTER" mnemonicParsing="false" onAction="#handleActionOnZipButtons" prefWidth="100.0" style="-fx-alignment: center;" text="TestU01" />
                               </children>
                            </HBox>
-                           <Button fx:id="downloadAllData" alignment="CENTER" mnemonicParsing="false" onAction="#handleActionOnStartAnalyzeButton" prefWidth="100.0" style="-fx-alignment: center;" text="All above" />
+                           <Button fx:id="zipAllFiles" alignment="CENTER" mnemonicParsing="false" onAction="#handleActionOnZipButtons" prefWidth="100.0" style="-fx-alignment: center;" text="All above" />
                         </children>
                      </VBox>
                   </children>
